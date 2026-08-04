@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://YOURDOMAIN.com/</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/men</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/kids</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/about</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/contact</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/faq</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/privacy-policy</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/shipping-policy</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/return-policy</loc>
+  </url>
+
+  <url>
+    <loc>https://YOURDOMAIN.com/terms</loc>
+  </url>
+
+</urlset>
