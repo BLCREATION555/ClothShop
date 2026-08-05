@@ -19,12 +19,15 @@ const FeaturedProducts = () => {
   const fetchProducts = async () => {
     try {
       const data = await getAllProducts();
+      console.log("Featured Products:", data);
 
-      const featuredProducts = Array.isArray(data)
-        ? data.filter((product) => product.isFeatured)
-        : [];
+     const featuredProducts = data.filter(
+  (product) => product.isFeatured
+);
 
-      setProducts(featuredProducts);
+console.log("Featured:", featuredProducts);
+
+setProducts(featuredProducts);
     } catch (error) {
       console.error("Failed to fetch featured products:", error);
       setProducts([]);
@@ -45,7 +48,7 @@ const FeaturedProducts = () => {
       </section>
     );
   }
-
+console.log("Products State:", products);
   return (
     <section
       id="featured-products"

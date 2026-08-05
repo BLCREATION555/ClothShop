@@ -16,6 +16,8 @@ function TrendingProducts() {
     try {
       const data = await getAllProducts();
 
+console.log("Trending:", data);
+
       const trending = [...data]
         .sort((a, b) => b.rating - a.rating)
         .slice(0, 8);

@@ -16,6 +16,8 @@ function NewArrivals() {
     try {
       const data = await getAllProducts();
 
+console.log("New Arrivals:", data);
+
       const latest = [...data]
         .sort(
           (a, b) =>

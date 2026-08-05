@@ -86,7 +86,11 @@ function ProductTable({ products, onDelete }) {
 
                     <img
 
-                      src={product.image}
+                     src={
+  product.images?.length
+    ? product.images[0].imageUrl
+    : "/placeholder.png"
+}
 
                       alt={product.name}
 

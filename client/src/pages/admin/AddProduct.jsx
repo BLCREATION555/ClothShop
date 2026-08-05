@@ -16,14 +16,18 @@ function AddProduct() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    image: null,
+    images: [],
     price: "",
     discountPrice: "",
     brand: "",
     gender: "MEN",
     fit: "",
     stock: "",
-    isFeatured: false,
+   isFeatured: false,
+isNewArrival: false,
+isTrending: false,
+isBestSeller: false,
+isOnSale: false,
     categoryId: "",
   });
 
@@ -54,13 +58,13 @@ function AddProduct() {
       files,
     } = e.target;
 
-    if (type === "file") {
-      setFormData((prev) => ({
-        ...prev,
-        image: files[0],
-      }));
-      return;
-    }
+  if (type === "file") {
+  setFormData((prev) => ({
+    ...prev,
+    images: files,
+  }));
+  return;
+}
 
     setFormData((prev) => ({
       ...prev,
@@ -79,10 +83,25 @@ function AddProduct() {
 
       const data = new FormData();
 
-      Object.keys(formData).forEach((key) => {
-        data.append(key, formData[key]);
-      });
+Object.keys(formData).forEach((key) => {
+  if (key === "images") {
+    Array.from(formData.images).forEach((image) => {
+      data.append("images", image);
+    });
+  } else if (
+    key === "discountPrice" &&
+    (!formData.discountPrice || Number(formData.discountPrice) <= 0)
+  ) {
+    // Don't send discountPrice if it's empty or 0
+  } else {
+    data.append(key, formData[key]);
+  }
+});
+for (const pair of data.entries()) {
+  console.log(pair[0], "=", pair[1]);
+}
 
+await createProduct(data);
       await createProduct(data);
 
       alert("✅ Product added successfully!");

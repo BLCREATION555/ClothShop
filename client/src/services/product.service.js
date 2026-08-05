@@ -4,7 +4,7 @@ import api from "./api";
 export const getAllProducts = async () => {
   const response = await api.get("/products");
 
-  console.log("PRODUCT RESPONSE:", response.data);
+console.log("PRODUCT RESPONSE:", JSON.stringify(response.data, null, 2));
 
   return response.data.data;
 };

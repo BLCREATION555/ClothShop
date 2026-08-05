@@ -69,22 +69,27 @@ function ProductCard({ product }) {
 
       <div className="relative overflow-hidden">
 
-        <img
-          src={product.image}
-          alt={product.name}
-          className="
+<img
+  src={product.images?.[0]?.imageUrl || "/placeholder.png"}
+  alt={product.name}
+  className="
 w-full
 h-52
 sm:h-64
 lg:h-80
-
 object-cover
-
 group-hover:scale-110
 transition
 duration-700
 "
-        />
+  onLoad={() =>
+    console.log("✅ Image Loaded:", product.images?.[0]?.imageUrl)
+  }
+  onError={(e) => {
+    console.log("❌ Image Failed:", product.images?.[0]?.imageUrl);
+    e.target.src = "/placeholder.png";
+  }}
+/>
 
         {/* Discount */}
 

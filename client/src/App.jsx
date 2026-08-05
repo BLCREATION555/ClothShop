@@ -31,6 +31,8 @@ import Wishlist from "./pages/Wishlist";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 
 import Addresses from "./pages/Addresses";
@@ -150,7 +152,15 @@ function App() {
           path="/register"
           element={<Register />}
         />
+      <Route
+  path="/forgot-password"
+  element={<ForgotPassword />}
+/>
 
+<Route
+  path="/reset-password/:token"
+  element={<ResetPassword />}
+/>
 
 
 

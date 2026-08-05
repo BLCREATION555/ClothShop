@@ -9,15 +9,15 @@ function ProductForm({
   buttonText,
   loading = false,
 }) {
-  const preview = useMemo(() => {
-    if (!formData.image) return null;
+const previews = useMemo(() => {
+  if (!formData.images || formData.images.length === 0) return [];
 
-    if (typeof formData.image === "string") {
-      return formData.image;
-    }
-
-    return URL.createObjectURL(formData.image);
-  }, [formData.image]);
+  return Array.from(formData.images).map((file) =>
+    typeof file === "string"
+      ? file
+      : URL.createObjectURL(file)
+  );
+}, [formData.images]);
 
   return (
     <form
@@ -25,50 +25,37 @@ function ProductForm({
       encType="multipart/form-data"
       className="space-y-8"
     >
-      {/* Image */}
+{/* Images */}
 
-      <div>
+<div>
 
-        <label className="block font-semibold mb-3">
-          Product Image
-        </label>
+  <label className="block font-semibold mb-3">
+    Product Images
+  </label>
 
-        <label className="border-2 border-dashed rounded-2xl h-64 flex flex-col items-center justify-center cursor-pointer hover:border-black transition">
+  <input
+    type="file"
+    name="images"
+    multiple
+    accept="image/*"
+    onChange={handleChange}
+    className="w-full border rounded-xl p-3"
+  />
 
-          {preview ? (
+  {previews.length > 0 && (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-5">
+      {previews.map((img, index) => (
+        <img
+          key={index}
+          src={img}
+          alt=""
+          className="w-full h-36 object-cover rounded-xl border"
+        />
+      ))}
+    </div>
+  )}
 
-            <img
-              src={preview}
-              alt="Preview"
-              className="w-full h-full object-cover rounded-2xl"
-            />
-
-          ) : (
-
-            <>
-              <FiUpload
-                size={45}
-                className="text-gray-400 mb-4"
-              />
-
-              <p className="text-gray-500">
-                Click to upload image
-              </p>
-            </>
-
-          )}
-
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            className="hidden"
-            onChange={handleChange}
-          />
-
-        </label>
-
-      </div>
+</div>
 
       {/* Basic */}
 
@@ -268,23 +255,64 @@ function ProductForm({
 
       </div>
 
-      {/* Featured */}
+ <div className="grid md:grid-cols-2 gap-4">
 
-      <div className="flex items-center gap-3">
+  <label className="flex items-center gap-3">
+    <input
+      type="checkbox"
+      name="isFeatured"
+      checked={formData.isFeatured}
+      onChange={handleChange}
+      className="w-5 h-5"
+    />
+    Featured Product
+  </label>
 
-        <input
-          type="checkbox"
-          name="isFeatured"
-          checked={formData.isFeatured}
-          onChange={handleChange}
-          className="w-5 h-5"
-        />
+  <label className="flex items-center gap-3">
+    <input
+      type="checkbox"
+      name="isNewArrival"
+      checked={formData.isNewArrival}
+      onChange={handleChange}
+      className="w-5 h-5"
+    />
+    New Arrival
+  </label>
 
-        <span className="font-medium">
-          Featured Product
-        </span>
+  <label className="flex items-center gap-3">
+    <input
+      type="checkbox"
+      name="isTrending"
+      checked={formData.isTrending}
+      onChange={handleChange}
+      className="w-5 h-5"
+    />
+    Trending
+  </label>
 
-      </div>
+  <label className="flex items-center gap-3">
+    <input
+      type="checkbox"
+      name="isBestSeller"
+      checked={formData.isBestSeller}
+      onChange={handleChange}
+      className="w-5 h-5"
+    />
+    Best Seller
+  </label>
+
+  <label className="flex items-center gap-3">
+    <input
+      type="checkbox"
+      name="isOnSale"
+      checked={formData.isOnSale}
+      onChange={handleChange}
+      className="w-5 h-5"
+    />
+    On Sale
+  </label>
+
+</div>
 
       {/* Submit */}
 

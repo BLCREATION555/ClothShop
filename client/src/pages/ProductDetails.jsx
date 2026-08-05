@@ -38,6 +38,7 @@ function ProductDetails() {
 
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedImage, setSelectedImage] = useState("");
 
   useEffect(() => {
     fetchProduct();
@@ -56,7 +57,11 @@ function ProductDetails() {
 
       const currentProduct = res.data || res;
 
-      setProduct(currentProduct);
+     setProduct(currentProduct);
+
+if (currentProduct.images?.length) {
+  setSelectedImage(currentProduct.images[0].imageUrl);
+}
 
       let recent = JSON.parse(
         localStorage.getItem("recentProducts") || "[]"
@@ -74,10 +79,12 @@ function ProductDetails() {
         "recentProducts",
         JSON.stringify(recent)
       );
-    } catch (err) {
-      console.error(err);
-      setProduct(null);
-    } finally {
+  } catch (err) {
+  console.error("Product Error:", err);
+  console.log("Response:", err.response);
+  console.log("Data:", err.response?.data);
+  setProduct(null);
+} finally {
       setLoading(false);
     }
   };
@@ -152,9 +159,9 @@ function ProductDetails() {
             </div>
           )}
 
-          <img
-            src={product.image}
-            alt={product.name}
+<img
+  src={selectedImage || "/placeholder.png"}
+  alt={product.name}
            className="
 w-full
 
@@ -173,7 +180,30 @@ duration-500
 "
           />
 
-        </div>
+          {product.images?.length > 0 && (
+    <div className="flex gap-3 mt-5 flex-wrap">
+      {product.images.map((image) => (
+        <button
+          key={image.id}
+          type="button"
+          onClick={() => setSelectedImage(image.imageUrl)}
+          className={`border-2 rounded-xl overflow-hidden ${
+            selectedImage === image.imageUrl
+              ? "border-black"
+              : "border-gray-300"
+          }`}
+        >
+          <img
+            src={image.imageUrl}
+            alt=""
+            className="w-20 h-20 object-cover"
+          />
+        </button>
+      ))}
+    </div>
+  )}
+
+</div>
 
         {/* Details */}
 

@@ -96,7 +96,14 @@ function Login() {
               required
             />
           </div>
-
+     <div className="flex justify-end">
+  <Link
+    to="/forgot-password"
+    className="text-sm text-black hover:underline"
+  >
+    Forgot Password?
+  </Link>
+</div>
           <button
             type="submit"
             disabled={loading}
