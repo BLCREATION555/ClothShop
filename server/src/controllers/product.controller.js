@@ -27,6 +27,8 @@ const getProductById = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
+  console.log("===== UPDATE BODY =====");
+console.log(req.body);
   const product = await productService.updateProduct(
     req.params.id,
     req.body,

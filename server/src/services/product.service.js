@@ -212,7 +212,7 @@ const updateProduct = async (
       data: uploadedImages,
     });
   }
-
+console.log("DATA RECEIVED:", data);
   return prisma.product.update({
     where: {
       id,
