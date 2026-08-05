@@ -58,24 +58,23 @@ const [formData, setFormData] = useState({
       const product =
         productRes.data || productRes;
 
- setFormData({
+setFormData({
   name: product.name || "",
   description: product.description || "",
-  images: [],
+  images: product.images || [],
   price: product.price || "",
   discountPrice: product.discountPrice || "",
   brand: product.brand || "",
   gender: product.gender || "MEN",
   fit: product.fit || "",
   stock: product.stock || "",
-
-  isFeatured: !!product.isFeatured,
-  isNewArrival: !!product.isNewArrival,
-  isTrending: !!product.isTrending,
-  isBestSeller: !!product.isBestSeller,
-  isOnSale: !!product.isOnSale,
-
   categoryId: product.categoryId || "",
+
+  isFeatured: product.isFeatured ?? false,
+  isNewArrival: product.isNewArrival ?? false,
+  isTrending: product.isTrending ?? false,
+  isBestSeller: product.isBestSeller ?? false,
+  isOnSale: product.isOnSale ?? false,
 });
     } catch (err) {
       console.error(err);
