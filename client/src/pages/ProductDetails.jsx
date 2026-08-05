@@ -130,19 +130,16 @@ if (currentProduct.images?.length) {
       </div>
     );
   }
+const discount = product.discountPrice || 0;
 
-  const discount =
-    product.discountPrice &&
-    Math.round(
-      ((product.price - product.discountPrice) /
-        product.price) *
-        100
-    );
+const finalPrice =
+  discount > 0
+    ? Math.round(
+        product.price * (1 - discount / 100)
+      )
+    : product.price;
 
-  const save =
-    product.discountPrice
-      ? product.price - product.discountPrice
-      : 0;
+const save = product.price - finalPrice;
 
   return (
   <div className="max-w-7xl mx-auto px-4 lg:px-6 py-8 lg:py-12">
