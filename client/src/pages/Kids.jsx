@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../components/product/ProductCard";
 import FilterSidebar from "../components/FilterSidebar";
-import products from "../data/products";
+import { getAllProducts } from "../services/product.service";
 import { useSearch } from "../context/SearchContext";
 
 function Kids() {
@@ -13,14 +13,28 @@ function Kids() {
   const [selectedRating, setSelectedRating] = useState(0);
 
   const [showFilters, setShowFilters] = useState(false);
+  const [products, setProducts] = useState([]);
+
+useEffect(() => {
+  fetchProducts();
+}, []);
+
+const fetchProducts = async () => {
+  try {
+    const data = await getAllProducts();
+    setProducts(data);
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   let kidsProducts = products.filter(
     (product) =>
-      product.category === "Kids" &&
+      product.gender?.toUpperCase() === "KIDS" &&
       product.price <= maxPrice &&
       product.rating >= selectedRating &&
       product.name.toLowerCase().includes(search.toLowerCase()) &&
-      (selectedSize === "" || product.size.includes(selectedSize))
+      selectedSize === ""
   );
 
   if (sortOption === "low") {
