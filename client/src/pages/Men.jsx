@@ -39,7 +39,7 @@ function Men() {
   };
 
   const filteredProducts = useMemo(() => {
-
+console.log("Current maxPrice:", maxPrice);
     let data = [...products];
     data = data.map((p) => {
   const discount = p.discountPrice || 0;
@@ -158,7 +158,15 @@ function Men() {
 
     }
 
-    return data;
+console.log(
+  "Products after filter:",
+  data.map((p) => ({
+    name: p.name,
+    finalPrice: p.finalPrice,
+  }))
+);
+
+return data;
 
   }, [
     products,

@@ -18,19 +18,25 @@ function EditProduct() {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    image: "",
-    price: "",
-    discountPrice: "",
-    brand: "",
-    gender: "MEN",
-    fit: "",
-    stock: "",
-    isFeatured: false,
-    categoryId: "",
-  });
+const [formData, setFormData] = useState({
+  name: "",
+  description: "",
+  images: [],
+  price: "",
+  discountPrice: "",
+  brand: "",
+  gender: "MEN",
+  fit: "",
+  stock: "",
+
+  isFeatured: false,
+  isNewArrival: false,
+  isTrending: false,
+  isBestSeller: false,
+  isOnSale: false,
+
+  categoryId: "",
+});
 
   useEffect(() => {
     fetchData();
@@ -52,22 +58,25 @@ function EditProduct() {
       const product =
         productRes.data || productRes;
 
-      setFormData({
-        name: product.name || "",
-        description: product.description || "",
-        image: product.image || "",
-        price: product.price || "",
-        discountPrice:
-          product.discountPrice || "",
-        brand: product.brand || "",
-        gender: product.gender || "MEN",
-        fit: product.fit || "",
-        stock: product.stock || "",
-        isFeatured:
-          product.isFeatured || false,
-        categoryId:
-          product.categoryId || "",
-      });
+ setFormData({
+  name: product.name || "",
+  description: product.description || "",
+  images: [],
+  price: product.price || "",
+  discountPrice: product.discountPrice || "",
+  brand: product.brand || "",
+  gender: product.gender || "MEN",
+  fit: product.fit || "",
+  stock: product.stock || "",
+
+  isFeatured: !!product.isFeatured,
+  isNewArrival: !!product.isNewArrival,
+  isTrending: !!product.isTrending,
+  isBestSeller: !!product.isBestSeller,
+  isOnSale: !!product.isOnSale,
+
+  categoryId: product.categoryId || "",
+});
     } catch (err) {
       console.error(err);
       alert("Failed to load product.");
@@ -83,13 +92,13 @@ function EditProduct() {
       files,
     } = e.target;
 
-    if (type === "file") {
-      setFormData((prev) => ({
-        ...prev,
-        image: files[0],
-      }));
-      return;
-    }
+  if (type === "file") {
+  setFormData((prev) => ({
+    ...prev,
+    images: files,
+  }));
+  return;
+}
 
     setFormData((prev) => ({
       ...prev,
@@ -106,18 +115,19 @@ function EditProduct() {
     try {
       setLoading(true);
 
-      const data = new FormData();
+  const data = new FormData();
 
-      Object.entries(formData).forEach(
-        ([key, value]) => {
-          if (
-            value !== null &&
-            value !== undefined
-          ) {
-            data.append(key, value);
-          }
-        }
-      );
+Object.entries(formData).forEach(([key, value]) => {
+  if (key === "images") {
+    if (value && value.length > 0) {
+      Array.from(value).forEach((file) => {
+        data.append("images", file);
+      });
+    }
+  } else {
+    data.append(key, value);
+  }
+});
 
       await updateProduct(id, data);
 
