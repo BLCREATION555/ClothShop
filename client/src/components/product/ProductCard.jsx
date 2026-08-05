@@ -41,13 +41,14 @@ function ProductCard({ product }) {
     await addToWishlist(product);
   };
 
-  const discount =
-    product.discountPrice &&
-    Math.round(
-      ((product.price - product.discountPrice) /
-        product.price) *
-        100
-    );
+ const discount = product.discountPrice || 0;
+
+const finalPrice =
+  discount > 0
+    ? Math.round(
+        product.price * (1 - discount / 100)
+      )
+    : product.price;
 
   return (
     <div
@@ -241,24 +242,19 @@ lg:mt-2">
 
         {/* Price */}
 
-        <div className="flex items-center gap-3 mt-5">
+<div className="flex items-center gap-3 mt-5">
 
-          <span className="text-lg
-lg:text-2xl font-bold">
-            ₹
-            {product.discountPrice ||
-              product.price}
-          </span>
+  <span className="text-lg lg:text-2xl font-bold">
+    ₹{finalPrice}
+  </span>
 
-          {product.discountPrice && (
+  {discount > 0 && (
+    <span className="text-gray-400 line-through">
+      ₹{product.price}
+    </span>
+  )}
 
-            <span className="text-gray-400 line-through">
-              ₹{product.price}
-            </span>
-
-          )}
-
-        </div>
+</div>
 
         {/* Cart Button */}
 

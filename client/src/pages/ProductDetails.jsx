@@ -244,23 +244,19 @@ lg:text-5xl font-bold mt-3">
 
           </div>
 
-          <div className="mt-8 flex items-center gap-5">
+    <div className="mt-8 flex items-center gap-5">
 
-            <span className="text-3xl
-lg:text-5xl font-bold">
-              ₹
-              {product.discountPrice ||
-                product.price}
-            </span>
+  <span className="text-3xl lg:text-5xl font-bold">
+    ₹{finalPrice}
+  </span>
 
-            {product.discountPrice && (
-              <span className="text-lg
-lg:text-2xl text-gray-400 line-through">
-                ₹{product.price}
-              </span>
-            )}
+  {discount > 0 && (
+    <span className="text-lg lg:text-2xl text-gray-400 line-through">
+      ₹{product.price}
+    </span>
+  )}
 
-          </div>
+</div>
 
           {save > 0 && (
             <p className="text-green-600 font-semibold mt-3">
