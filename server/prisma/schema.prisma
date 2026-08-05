@@ -32,31 +32,30 @@ model Category {
 }
 
 model Product {
-  id            String      @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String
   description   String
-images        ProductImage[]
   price         Float
   discountPrice Float?
   brand         String
   gender        String
   fit           String
-  rating        Float       @default(5)
+  rating        Float          @default(5)
   stock         Int
-  isFeatured    Boolean     @default(false)
-  isNewArrival  Boolean     @default(false)
-isTrending    Boolean     @default(false)
-isBestSeller  Boolean     @default(false)
-isOnSale      Boolean     @default(false)
+  isFeatured    Boolean        @default(false)
   categoryId    String
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  isBestSeller  Boolean        @default(false)
+  isNewArrival  Boolean        @default(false)
+  isOnSale      Boolean        @default(false)
+  isTrending    Boolean        @default(false)
   carts         Cart[]
   orderItems    OrderItem[]
-  category      Category    @relation(fields: [categoryId], references: [id])
+  category      Category       @relation(fields: [categoryId], references: [id])
+  images        ProductImage[]
   reviews       Review[]
   wishlists     Wishlist[]
-
 
   @@index([categoryId])
   @@index([brand])
@@ -71,7 +70,7 @@ model Cart {
   productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, productId])
@@ -84,7 +83,7 @@ model Wishlist {
   productId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, productId])
@@ -122,7 +121,7 @@ model OrderItem {
   price     Float
   createdAt DateTime @default(now())
   order     Order    @relation(fields: [orderId], references: [id])
- product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Address {
@@ -147,7 +146,7 @@ model Review {
   rating    Int
   comment   String
   createdAt DateTime @default(now())
-product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, productId])
@@ -173,16 +172,15 @@ model ContactMessage {
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
 model ProductImage {
   id        String   @id @default(cuid())
-
   imageUrl  String
-
   productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
+
 enum OrderStatus {
   PENDING
   PROCESSING
