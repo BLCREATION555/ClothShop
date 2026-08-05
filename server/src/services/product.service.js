@@ -213,11 +213,7 @@ const updateProduct = async (
       data: uploadedImages,
     });
   }
-console.log("================================");
-console.log("isFeatured:", data.isFeatured);
-console.log("Type:", typeof data.isFeatured);
-console.log("Body:", data);
-console.log("================================");
+
   return prisma.product.update({
     where: {
       id,

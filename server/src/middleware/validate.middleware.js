@@ -1,9 +1,6 @@
 const validate = (schema) => {
   return (req, res, next) => {
-    console.log("======================================");
-    console.log("✅ Validation Middleware Executed");
-    console.log("Request Body:", req.body);
-    console.log("======================================");
+  
 
     const result = schema.safeParse(req.body);
 
