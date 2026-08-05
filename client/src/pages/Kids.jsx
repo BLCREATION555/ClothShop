@@ -28,22 +28,51 @@ const fetchProducts = async () => {
   }
 };
 
-  let kidsProducts = products.filter(
-    (product) =>
-      product.gender?.toUpperCase() === "KIDS" &&
-      product.price <= maxPrice &&
-      product.rating >= selectedRating &&
-      product.name.toLowerCase().includes(search.toLowerCase()) &&
-      selectedSize === ""
+let kidsProducts = products.filter((product) => {
+  const discount = product.discountPrice || 0;
+
+  const finalPrice =
+    discount > 0
+      ? Math.round(product.price * (1 - discount / 100))
+      : product.price;
+
+  return (
+    product.gender?.toUpperCase() === "KIDS" &&
+    finalPrice <= maxPrice &&
+    product.rating >= selectedRating &&
+    product.name
+      .toLowerCase()
+      .includes(search.toLowerCase()) &&
+    selectedSize === ""
   );
+});
+if (sortOption === "low") {
+  kidsProducts.sort((a, b) => {
+    const priceA = a.discountPrice
+      ? Math.round(a.price * (1 - a.discountPrice / 100))
+      : a.price;
 
-  if (sortOption === "low") {
-    kidsProducts.sort((a, b) => a.price - b.price);
-  }
+    const priceB = b.discountPrice
+      ? Math.round(b.price * (1 - b.discountPrice / 100))
+      : b.price;
 
-  if (sortOption === "high") {
-    kidsProducts.sort((a, b) => b.price - a.price);
-  }
+    return priceA - priceB;
+  });
+}
+
+if (sortOption === "high") {
+  kidsProducts.sort((a, b) => {
+    const priceA = a.discountPrice
+      ? Math.round(a.price * (1 - a.discountPrice / 100))
+      : a.price;
+
+    const priceB = b.discountPrice
+      ? Math.round(b.price * (1 - b.discountPrice / 100))
+      : b.price;
+
+    return priceB - priceA;
+  });
+}
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">

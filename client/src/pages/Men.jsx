@@ -41,6 +41,19 @@ function Men() {
   const filteredProducts = useMemo(() => {
 
     let data = [...products];
+    data = data.map((p) => {
+  const discount = p.discountPrice || 0;
+
+  return {
+    ...p,
+    finalPrice:
+      discount > 0
+        ? Math.round(
+            p.price * (1 - discount / 100)
+          )
+        : p.price,
+  };
+});
 
     // MEN PRODUCTS
 
@@ -66,7 +79,7 @@ function Men() {
 
     data = data.filter(
       (p) =>
-        Number(p.discountPrice || p.price) <= maxPrice
+      p.finalPrice <= maxPrice
     );
 
     // RATING
@@ -106,8 +119,7 @@ function Men() {
 
         data.sort(
           (a, b) =>
-            Number(a.discountPrice || a.price) -
-            Number(b.discountPrice || b.price)
+         a.finalPrice - b.finalPrice
         );
 
         break;
@@ -116,8 +128,7 @@ function Men() {
 
         data.sort(
           (a, b) =>
-            Number(b.discountPrice || b.price) -
-            Number(a.discountPrice || a.price)
+         b.finalPrice - a.finalPrice
         );
 
         break;
