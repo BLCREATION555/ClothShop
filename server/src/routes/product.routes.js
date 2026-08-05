@@ -29,7 +29,7 @@ router.post(
   "/",
   protect,
   isAdmin,
-  upload.single("image"),
+upload.array("images", 10),
   validate(createProductSchema),
   productController.createProduct
 );
@@ -38,7 +38,7 @@ router.patch(
   "/:id",
   protect,
   isAdmin,
-  upload.single("image"),
+  upload.array("images", 10),
   validate(updateProductSchema),
   productController.updateProduct
 );

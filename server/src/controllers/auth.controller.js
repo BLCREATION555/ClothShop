@@ -89,10 +89,47 @@ const changePassword = asyncHandler(async (req, res) => {
   );
 });
 
+// ======================
+// Forgot Password
+// ======================
+
+const forgotPassword = asyncHandler(async (req, res) => {
+  await authService.forgotPassword(req.body.email);
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      null,
+      "If an account with that email exists, a password reset link has been sent."
+    )
+  );
+});
+
+// ======================
+// Reset Password
+// ======================
+
+const resetPassword = asyncHandler(async (req, res) => {
+  await authService.resetPassword(
+    req.params.token,
+    req.body.password
+  );
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      null,
+      "Password reset successfully."
+    )
+  );
+});
+
 module.exports = {
   register,
   login,
   getProfile,
   updateProfile,
-  changePassword,
+ changePassword,
+  forgotPassword,
+  resetPassword,
 };

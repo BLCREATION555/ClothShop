@@ -3,7 +3,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const ApiResponse = require("../utils/ApiResponse");
 
 const createProduct = asyncHandler(async (req, res) => {
-  const product = await productService.createProduct(req.body, req.file);
+ const product = await productService.createProduct(req.body, req.files);
 
   return res.status(201).json(
     new ApiResponse(201, product, "Product created successfully.")
@@ -30,7 +30,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   const product = await productService.updateProduct(
     req.params.id,
     req.body,
-    req.file
+    req.files
   );
 
   return res.status(200).json(

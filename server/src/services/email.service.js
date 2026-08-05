@@ -99,6 +99,75 @@ console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Loaded" : "Missing");
   });
 };
 
+// ======================
+// Password Reset Email
+// ======================
+
+const sendPasswordResetEmail = async (
+  userEmail,
+  userName,
+  resetLink
+) => {
+  const html = `
+  <div style="font-family:Arial,sans-serif;max-width:700px;margin:auto;border:1px solid #eee;padding:30px;">
+
+    <h1 style="text-align:center;color:#111;">
+      BL CREATION
+    </h1>
+
+    <h2>Hello ${userName},</h2>
+
+    <p>
+      We received a request to reset your password.
+    </p>
+
+    <p>
+      Click the button below to create a new password.
+    </p>
+
+    <div style="text-align:center;margin:30px 0;">
+      <a
+        href="${resetLink}"
+        style="
+          background:#111;
+          color:#fff;
+          padding:14px 28px;
+          text-decoration:none;
+          border-radius:6px;
+          display:inline-block;
+        "
+      >
+        Reset Password
+      </a>
+    </div>
+
+    <p>
+      This link will expire in <strong>15 minutes</strong>.
+    </p>
+
+    <p>
+      If you didn't request this, you can safely ignore this email.
+    </p>
+
+    <hr>
+
+    <p>
+      Regards,<br>
+      <strong>BL CREATION Team</strong>
+    </p>
+
+  </div>
+  `;
+
+  await transporter.sendMail({
+    from: `"BL CREATION" <${process.env.EMAIL_USER}>`,
+    to: userEmail,
+    subject: "Reset Your BL CREATION Password",
+    html,
+  });
+};
+
 module.exports = {
   sendOrderConfirmationEmail,
+  sendPasswordResetEmail,
 };

@@ -1,8 +1,13 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const prisma = require("../config/prisma");
 const ApiError = require("../utils/ApiError");
+
+const {
+  sendPasswordResetEmail,
+} = require("./email.service");
 
 // ======================
 // Register User
@@ -213,10 +218,95 @@ const changePassword = async (
   return true;
 };
 
+// ======================
+// Forgot Password
+// ======================
+
+const forgotPassword = async (email) => {
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  // Don't reveal if email exists
+  if (!user) {
+    return true;
+  }
+
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  const expiresAt = new Date(
+    Date.now() + 15 * 60 * 1000
+  );
+
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      resetToken,
+      resetTokenExpiresAt: expiresAt,
+    },
+  });
+
+  const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
+  await sendPasswordResetEmail(
+    user.email,
+    user.name,
+    resetLink
+  );
+
+  return true;
+};
+
+// ======================
+// Reset Password
+// ======================
+
+const resetPassword = async (
+  token,
+  newPassword
+) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      resetToken: token,
+      resetTokenExpiresAt: {
+        gt: new Date(),
+      },
+    },
+  });
+
+  if (!user) {
+    throw new ApiError(
+      400,
+      "Reset link is invalid or expired."
+    );
+  }
+
+  const hashedPassword = await bcrypt.hash(
+    newPassword,
+    10
+  );
+
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      password: hashedPassword,
+      resetToken: null,
+      resetTokenExpiresAt: null,
+    },
+  });
+
+  return true;
+};
 module.exports = {
   registerUser,
   loginUser,
   getUserProfile,
   updateUserProfile,
   changePassword,
+  forgotPassword,
+  resetPassword,
 };

@@ -8,6 +8,8 @@ const {
   getProfile,
   updateProfile,
   changePassword,
+  forgotPassword,
+  resetPassword,
 } = require("../controllers/auth.controller");
 
 const { protect } = require("../middleware/auth.middleware");
@@ -16,6 +18,8 @@ const validate = require("../middleware/validate.middleware");
 const {
   registerSchema,
   loginSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
 } = require("../validators/auth.validator");
 
 // ======================
@@ -26,6 +30,17 @@ router.post(
   "/register",
   validate(registerSchema),
   register
+);
+router.post(
+  "/forgot-password",
+  validate(forgotPasswordSchema),
+  forgotPassword
+);
+
+router.post(
+  "/reset-password/:token",
+  validate(resetPasswordSchema),
+  resetPassword
 );
 
 router.post(

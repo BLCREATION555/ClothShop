@@ -10,7 +10,21 @@ const createProductSchema = z.object({
 
   price: z.coerce.number().positive("Price must be greater than 0"),
 
-  discountPrice: z.coerce.number().positive().optional(),
+discountPrice: z.preprocess(
+  (value) => {
+    if (
+      value === "" ||
+      value === "0" ||
+      value === 0 ||
+      value === null
+    ) {
+      return undefined;
+    }
+
+    return value;
+  },
+  z.coerce.number().positive().optional()
+),
 
   brand: z.string().min(2, "Brand is required"),
 
@@ -23,7 +37,13 @@ const createProductSchema = z.object({
   stock: z.coerce.number().int().min(0),
 
   isFeatured: z.coerce.boolean().optional(),
+  isNewArrival: z.coerce.boolean().optional(),
 
+isTrending: z.coerce.boolean().optional(),
+
+isBestSeller: z.coerce.boolean().optional(),
+
+isOnSale: z.coerce.boolean().optional(),
   categoryId: z.string().min(1, "Category is required"),
 });
 
