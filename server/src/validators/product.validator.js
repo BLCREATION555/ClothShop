@@ -36,14 +36,19 @@ discountPrice: z.preprocess(
 
   stock: z.coerce.number().int().min(0),
 
-  isFeatured: z.coerce.boolean().optional(),
-  isNewArrival: z.coerce.boolean().optional(),
-
-isTrending: z.coerce.boolean().optional(),
-
-isBestSeller: z.coerce.boolean().optional(),
-
-isOnSale: z.coerce.boolean().optional(),
+ const booleanField = z.preprocess(
+  (value) => {
+    if (value === "true") return true;
+    if (value === "false") return false;
+    return value;
+  },
+  z.boolean().optional()
+);
+isFeatured: booleanField,
+isNewArrival: booleanField,
+isTrending: booleanField,
+isBestSeller: booleanField,
+isOnSale: booleanField,
   categoryId: z.string().min(1, "Category is required"),
 });
 

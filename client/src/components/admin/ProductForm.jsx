@@ -12,11 +12,24 @@ function ProductForm({
 const previews = useMemo(() => {
   if (!formData.images || formData.images.length === 0) return [];
 
-  return Array.from(formData.images).map((file) =>
-    typeof file === "string"
-      ? file
-      : URL.createObjectURL(file)
-  );
+  return Array.from(formData.images).map((file) => {
+    // Existing image from database
+    if (file?.imageUrl) {
+      return file.imageUrl;
+    }
+
+    // Already a URL string
+    if (typeof file === "string") {
+      return file;
+    }
+
+    // Newly selected image
+    if (file instanceof File) {
+      return URL.createObjectURL(file);
+    }
+
+    return "";
+  });
 }, [formData.images]);
 
   return (
