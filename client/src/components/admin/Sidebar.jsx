@@ -8,7 +8,9 @@ import {
 } from "react-icons/fi";
 
 function Sidebar() {
-  const navigate = useNavigate();
+  
+
+const navigate = useNavigate();
 
 const handleLogout = () => {
   localStorage.removeItem("adminToken");
@@ -17,17 +19,13 @@ const handleLogout = () => {
 
   navigate("/login");
 };
-   const navigate = useNavigate();
-  const linkClass = ({ isActive }) =>
-    `flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
-      isActive
-        ? "bg-black text-white shadow-md"
-        : "text-gray-700 hover:bg-gray-100"
-    }`;
-const handleLogout = () => {
-  localStorage.removeItem("adminToken");
-  navigate("/login");
-};
+
+const linkClass = ({ isActive }) =>
+  `flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
+    isActive
+      ? "bg-black text-white shadow-md"
+      : "text-gray-700 hover:bg-gray-100"
+  }`;
   return (
     <aside className="w-72 h-screen bg-white border-r border-gray-200 flex flex-col">
 
