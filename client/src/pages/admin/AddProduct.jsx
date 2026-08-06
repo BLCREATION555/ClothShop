@@ -23,6 +23,7 @@ function AddProduct() {
     gender: "MEN",
     fit: "",
     stock: "",
+rating: 5,
    isFeatured: false,
 isNewArrival: false,
 isTrending: false,

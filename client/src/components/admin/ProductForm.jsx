@@ -230,43 +230,62 @@ const previews = useMemo(() => {
 
       {/* Stock */}
 
-      <div className="grid lg:grid-cols-2 gap-6">
+<div className="grid lg:grid-cols-3 gap-6">
 
-        <div>
+  <div>
 
-          <label className="block font-semibold mb-2">
-            Fit
-          </label>
+    <label className="block font-semibold mb-2">
+      Fit
+    </label>
 
-          <input
-            type="text"
-            name="fit"
-            value={formData.fit}
-            onChange={handleChange}
-            className="w-full border rounded-xl p-3"
-            required
-          />
+    <input
+      type="text"
+      name="fit"
+      value={formData.fit}
+      onChange={handleChange}
+      className="w-full border rounded-xl p-3"
+      required
+    />
 
-        </div>
+  </div>
 
-        <div>
+  <div>
 
-          <label className="block font-semibold mb-2">
-            Stock
-          </label>
+    <label className="block font-semibold mb-2">
+      Stock
+    </label>
 
-          <input
-            type="number"
-            name="stock"
-            value={formData.stock}
-            onChange={handleChange}
-            className="w-full border rounded-xl p-3"
-            required
-          />
+    <input
+      type="number"
+      name="stock"
+      value={formData.stock}
+      onChange={handleChange}
+      className="w-full border rounded-xl p-3"
+      required
+    />
 
-        </div>
+  </div>
 
-      </div>
+  <div>
+
+    <label className="block font-semibold mb-2">
+      Rating
+    </label>
+
+    <input
+      type="number"
+      name="rating"
+      min="1"
+      max="5"
+      value={formData.rating}
+      onChange={handleChange}
+      className="w-full border rounded-xl p-3"
+      required
+    />
+
+  </div>
+
+</div>
 
  <div className="grid md:grid-cols-2 gap-4">
 
