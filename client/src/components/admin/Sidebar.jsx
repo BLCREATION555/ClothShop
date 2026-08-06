@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   FiHome,
   FiPackage,
@@ -8,13 +8,17 @@ import {
 } from "react-icons/fi";
 
 function Sidebar() {
+   const navigate = useNavigate();
   const linkClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
       isActive
         ? "bg-black text-white shadow-md"
         : "text-gray-700 hover:bg-gray-100"
     }`;
-
+const handleLogout = () => {
+  localStorage.removeItem("adminToken");
+  navigate("/admin/login");
+};
   return (
     <aside className="w-72 h-screen bg-white border-r border-gray-200 flex flex-col">
 
@@ -69,10 +73,10 @@ function Sidebar() {
 
       {/* Footer */}
       <div className="border-t p-5">
-
-        <button
-          className="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl transition"
-        >
+<button
+  onClick={handleLogout}
+  className="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl transition"
+>
           <FiLogOut size={18} />
           Logout
         </button>

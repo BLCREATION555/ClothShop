@@ -103,7 +103,6 @@ for (const pair of data.entries()) {
 }
 
 await createProduct(data);
-      await createProduct(data);
 
       alert("✅ Product added successfully!");
 
