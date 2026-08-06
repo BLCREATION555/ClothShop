@@ -73,7 +73,17 @@ if (sortOption === "high") {
     return priceB - priceA;
   });
 }
+ if (sortOption === "featured") {
+  kidsProducts = kidsProducts.filter(
+    (product) => product.isFeatured
+  );
+}
 
+if (sortOption === "new") {
+  kidsProducts = kidsProducts.filter(
+    (product) => product.isNewArrival
+  );
+}
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
 
