@@ -133,25 +133,17 @@ console.log("Current maxPrice:", maxPrice);
 
         break;
 
-      case "new":
+    case "new":
 
-        data.sort(
-          (a, b) =>
-            new Date(b.createdAt) -
-            new Date(a.createdAt)
-        );
+  data = data.filter((p) => p.isNewArrival);
 
-        break;
+  break;
 
-      case "featured":
+  case "featured":
 
-        data.sort(
-          (a, b) =>
-            Number(b.isFeatured) -
-            Number(a.isFeatured)
-        );
+  data = data.filter((p) => p.isFeatured);
 
-        break;
+  break;
 
       default:
         break;
