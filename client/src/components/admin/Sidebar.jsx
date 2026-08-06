@@ -8,6 +8,15 @@ import {
 } from "react-icons/fi";
 
 function Sidebar() {
+  const navigate = useNavigate();
+
+const handleLogout = () => {
+  localStorage.removeItem("adminToken");
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+
+  navigate("/login");
+};
    const navigate = useNavigate();
   const linkClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 ${
@@ -17,7 +26,7 @@ function Sidebar() {
     }`;
 const handleLogout = () => {
   localStorage.removeItem("adminToken");
-  navigate("/admin/login");
+  navigate("/login");
 };
   return (
     <aside className="w-72 h-screen bg-white border-r border-gray-200 flex flex-col">
