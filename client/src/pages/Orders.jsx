@@ -191,11 +191,15 @@ function Orders() {
                     className="flex gap-5 items-center border-b pb-5 last:border-0"
                   >
 
-                    <img
-                      src={item.product?.image}
-                      alt={item.product?.name}
-                      className="w-24 h-24 rounded-xl object-cover border"
-                    />
+                   <img
+  src={
+    item.product?.images?.[0]?.imageUrl?.startsWith("http")
+      ? item.product.images[0].imageUrl
+      : `https://blcreation-api.onrender.com/${item.product?.images?.[0]?.imageUrl}`
+  }
+  alt={item.product?.name}
+  className="w-24 h-24 rounded-xl object-cover border"
+/>
 
                     <div className="flex-1">
 
