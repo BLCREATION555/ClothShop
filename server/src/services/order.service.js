@@ -107,20 +107,23 @@ const createOrder = async (userId, addressId) => {
   );
 
   // Get Complete Order
-  const completeOrder =
-    await prisma.order.findUnique({
-      where: {
-        id: order.id,
-      },
+const completeOrder = await prisma.order.findUnique({
+  where: {
+    id: order.id,
+  },
+  include: {
+    orderItems: {
       include: {
-        orderItems: {
+        product: {
           include: {
-            product: true,
-          },
+            images: true   // ✅ FIX
+          }
         },
-        payment: true,
       },
-    });
+    },
+    payment: true,
+  },
+});
 
   // Send Email (Don't fail order if email fails)
   try {
@@ -155,7 +158,11 @@ const getMyOrders = async (userId) => {
     include: {
       orderItems: {
         include: {
-          product: true,
+          product: {
+  include: {
+    images: true
+  }
+}
         },
       },
       payment: true,
@@ -179,7 +186,11 @@ const getOrderById = async (
       include: {
         orderItems: {
           include: {
-            product: true,
+           product: {
+  include: {
+    images: true
+  }
+}
           },
         },
         payment: true,
@@ -255,7 +266,11 @@ const cancelOrderById = async (
         include: {
           orderItems: {
             include: {
-              product: true,
+              product: {
+  include: {
+    images: true
+  }
+}
             },
           },
           payment: true,
@@ -277,7 +292,11 @@ const getAllOrders = async () => {
       },
       orderItems: {
         include: {
-          product: true,
+          product: {
+  include: {
+    images: true
+  }
+}
         },
       },
       payment: true,

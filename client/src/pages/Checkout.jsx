@@ -130,17 +130,15 @@ function Checkout() {
       if(paymentMethod === "COD"){
 
 
-        await placeOrder(
-          selectedAddress
-        );
+const res = await placeOrder(selectedAddress);
 
+if(res.success){
+  alert("Order placed successfully!");
 
-        alert(
-          "Order placed successfully!"
-        );
-
-
-        navigate("/orders");
+  setTimeout(() => {
+    navigate("/orders");
+  }, 1000);
+}
 
 
         return;
